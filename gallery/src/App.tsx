@@ -1,28 +1,23 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   Button,
-  buttonVariantConfig,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  Label,
-  Separator,
-  Slider,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Tooltip,
-  TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
 } from "@uink/ui";
 import pkg from "../../package.json" with { type: "json" };
 import { AppTopbar } from "./AppTopbar";
 import { CopyToken } from "./CopyToken";
-import { readLiveTokens, tokensSource, type TokenGroup } from "./kit";
+import {
+  kitComponentFiles,
+  readLiveTokens,
+  tokensSource,
+  type TokenGroup,
+} from "./kit";
+import { ComponentCatalog, CompositionSpecimen } from "./Specimens";
 import { applyTheme, readStoredTheme, type Theme } from "./theme";
 
 function useLiveTokens(theme: Theme) {
@@ -43,13 +38,34 @@ function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-const kitSections = [
+function titleCase(file: string) {
+  return file.charAt(0).toUpperCase() + file.slice(1);
+}
+
+type NavItem = {
+  id: string;
+  title: string;
+  children?: { id: string; title: string }[];
+};
+
+const kitSections: NavItem[] = [
   { id: "tokens", title: "Tokens" },
   { id: "scale", title: "Scale" },
   { id: "elevation", title: "Elevation" },
-  { id: "button-matrix", title: "Button matrix" },
-  { id: "stacked-primitives", title: "Stacked primitives" },
-] as const;
+  {
+    id: "components",
+    title: "Components",
+    children: kitComponentFiles.map((file) => ({
+      id: file,
+      title: titleCase(file),
+    })),
+  },
+  { id: "composition", title: "Composition" },
+];
+
+const kitLinks = kitSections.flatMap((section) =>
+  section.children?.length ? section.children : [section]
+);
 
 function Section({
   eyebrow,
@@ -96,6 +112,20 @@ function KitOutline({ className }: { className?: string }) {
             >
               {section.title}
             </a>
+            {section.children ? (
+              <ul className="mt-1 ml-2 flex flex-col gap-0.5 border-l border-border pl-2">
+                {section.children.map((child) => (
+                  <li key={child.id}>
+                    <a
+                      href={`#${child.id}`}
+                      className="block rounded-lg px-2 py-1 font-mono text-mono-sm text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
+                    >
+                      {child.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </li>
         ))}
       </ul>
@@ -114,16 +144,7 @@ export function App() {
     applyTheme(initial);
     return initial;
   });
-  const [slider, setSlider] = useState([42]);
   const groups = useLiveTokens(theme);
-  const variants = useMemo(
-    () => Object.keys(buttonVariantConfig.variant) as Array<keyof typeof buttonVariantConfig.variant>,
-    []
-  );
-  const sizes = useMemo(
-    () => Object.keys(buttonVariantConfig.size) as Array<keyof typeof buttonVariantConfig.size>,
-    []
-  );
 
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
@@ -162,7 +183,7 @@ export function App() {
         <div className="xl:hidden">
           <Section eyebrow="Inventory" title="In this kit">
             <div className="flex flex-wrap gap-2">
-              {kitSections.map((section) => (
+              {kitLinks.map((section) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
@@ -233,99 +254,12 @@ export function App() {
           </div>
         </Section>
 
-        <Section eyebrow="Primitives" title="Button matrix">
-          <Card>
-            <CardContent className="overflow-x-auto pt-6">
-              <table className="w-full min-w-[40rem] border-separate border-spacing-3">
-                <thead>
-                  <tr>
-                    <th className="text-left text-caption font-medium text-muted-foreground">
-                      variant \ size
-                    </th>
-                    {sizes.map((size) => (
-                      <th
-                        key={size}
-                        className="text-left font-mono text-caption font-medium text-muted-foreground"
-                      >
-                        {size}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {variants.map((variant) => (
-                    <tr key={variant}>
-                      <td className="align-middle font-mono text-mono-sm">{variant}</td>
-                      {sizes.map((size) => (
-                        <td key={size} className="align-middle">
-                          <Button variant={variant} size={size}>
-                            {size === "icon" || size === "xs" ? "·" : variant}
-                          </Button>
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
+        <Section eyebrow="Kit" title="Components">
+          <ComponentCatalog files={kitComponentFiles} />
         </Section>
 
-        <Section eyebrow="Composition" title="Stacked primitives">
-          <div className="uink-shell p-6">
-            <div className="mb-4">
-              <h3 className="font-display text-heading font-semibold">
-                Shell, card, tabs
-              </h3>
-              <p className="text-ui text-muted-foreground">
-                How the primitives sit together — not a product flow
-              </p>
-            </div>
-            <Tabs defaultValue="slider">
-              <TabsList>
-                <TabsTrigger value="slider">Slider</TabsTrigger>
-                <TabsTrigger value="type">Type</TabsTrigger>
-              </TabsList>
-              <TabsContent value="slider">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Value</CardTitle>
-                    <CardDescription>Label, slider, tooltip</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Label htmlFor="intensity" className="cursor-help">
-                          Amount · {slider[0]}
-                        </Label>
-                      </TooltipTrigger>
-                      <TooltipContent>Current slider value</TooltipContent>
-                    </Tooltip>
-                    <Slider
-                      id="intensity"
-                      value={slider}
-                      onValueChange={setSlider}
-                      max={100}
-                      step={1}
-                    />
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              <TabsContent value="type">
-                <Card>
-                  <CardContent className="space-y-3 pt-6">
-                    <p className="font-display text-heading font-semibold">
-                      Heading on a card
-                    </p>
-                    <Separator />
-                    <p className="text-body-sm text-muted-foreground">
-                      Body sits in the lifted surface, not on the shell.
-                    </p>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
+        <Section eyebrow="Together" title="Composition">
+          <CompositionSpecimen />
         </Section>
         </div>
       </div>

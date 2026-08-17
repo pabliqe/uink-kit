@@ -10,6 +10,7 @@
 - Set `color-scheme: dark` under `[data-theme="dark"]`
 - Add a living `gallery/` kit sheet (tokens from CSS, primitives from `src/`)
 - Slider thumb uses the same fill as the range (`--slider-fill`)
+- Gallery lists each exported primitive as its own specimen (not a stacked stand-in)
 
 ## [0.1.0]
 - Initial tokens, Tailwind preset, and primitives (`Button`, `Tooltip`, `Separator`, `Tabs`, `Slider`, `Label`)
