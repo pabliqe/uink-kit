@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.0]
+- Add `DropdownFilter` — compact bold value + chevron menu (PATTTTERNS #379), not a boxed `<select>`
+
 ## [0.2.0]
 - Persist darker canvas (`--background`) and lighter cards (`--card`) in both themes
 - Add `.uink-shell` (dark rounded panel) and `.uink-card` / `<Card>` (light card on that canvas)

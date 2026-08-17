@@ -39,7 +39,10 @@ function slugify(title: string) {
 }
 
 function titleCase(file: string) {
-  return file.charAt(0).toUpperCase() + file.slice(1);
+  return file
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 type NavItem = {

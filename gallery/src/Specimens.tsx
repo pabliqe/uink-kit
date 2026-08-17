@@ -8,6 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  DropdownFilter,
   Label,
   Separator,
   Slider,
@@ -118,6 +119,33 @@ function CardSpecimen() {
   );
 }
 
+function DropdownFilterSpecimen() {
+  const options = [
+    "Maya",
+    "Online Value Shopper",
+    "es-AR",
+    "Other…",
+  ] as const;
+  const [value, setValue] = useState<string>(options[0]);
+  return (
+    <Specimen
+      id="dropdown-filter"
+      name="DropdownFilter"
+      description="Bold value + chevron; menu is not a full-width select box"
+    >
+      <div className="space-y-1.5">
+        <Label htmlFor="dropdown-filter-demo">Name</Label>
+        <DropdownFilter
+          id="dropdown-filter-demo"
+          value={value}
+          options={options}
+          onChange={setValue}
+        />
+      </div>
+    </Specimen>
+  );
+}
+
 function LabelSpecimen() {
   return (
     <Specimen id="label" name="Label" description="Form caption; pairs with controls">
@@ -196,6 +224,7 @@ function TooltipSpecimen() {
 const specimenByFile: Record<string, () => ReactNode> = {
   button: () => <ButtonSpecimen />,
   card: () => <CardSpecimen />,
+  "dropdown-filter": () => <DropdownFilterSpecimen />,
   label: () => <LabelSpecimen />,
   separator: () => <SeparatorSpecimen />,
   slider: () => <SliderSpecimen />,

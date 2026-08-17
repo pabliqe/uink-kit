@@ -8,7 +8,7 @@ This repo (`uink-kit`) is the source of truth. Apps install it from GitHub at bu
 
 - `tokens.css` — HSL brand/neutral tokens + shadcn semantic bridge + elevation
 - `tailwind-preset` — Tailwind theme extension + `tailwindcss-animate`
-- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `Tabs`, `Slider`, `Label`
+- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `Tabs`, `Slider`, `Label`, `DropdownFilter`
 - `cn()` helper
 
 ## Surfaces
@@ -62,7 +62,7 @@ module.exports = {
 ```
 
 ```tsx
-import { Button, Card, TooltipProvider } from "@uink/ui";
+import { Button, Card, DropdownFilter, TooltipProvider } from "@uink/ui";
 ```
 
 Ensure Vite can transpile the linked package (default for `file:` installs). Theme: set `data-theme` and `.dark` on `<html>`.
