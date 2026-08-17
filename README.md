@@ -22,7 +22,7 @@ Both themes use a **darker canvas + lighter cards** elevation:
 | `.uink-shell` | Dark rounded panel: canvas fill + edge + glow |
 | `.uink-card` / `<Card>` | Light card on a shell: fill + edge + glow |
 | `bg-background` inside a card | Sunken wells (inputs, dropzones) |
-| `shadow-solid` / `--solid-glow` | Raised filled buttons (brand / blue / destructive) |
+| `shadow-solid` / `.uink-solid` / `--solid-glow` | Raised filled buttons (brand / blue / destructive) |
 
 `shadow-card` maps to `--shadow-card` if you need the glow without the full `.uink-card` chrome.
 

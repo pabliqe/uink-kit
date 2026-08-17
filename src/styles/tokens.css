@@ -119,16 +119,18 @@
 
     /* Solid fills (brand / blue buttons, app-icon logo): inset highlight + tinted glow.
        Override --solid-glow (HSL channels) on the element to tint the drop shadow. */
-    --shadow-solid:
-      inset 0 1px 0 hsl(0 0% 100% / 0.3),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.12),
-      0 1px 2px hsl(0 9% 13% / 0.16),
-      0 6px 14px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.38);
-    --shadow-solid-hover:
-      inset 0 1px 0 hsl(0 0% 100% / 0.38),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.16),
-      0 2px 4px hsl(0 9% 13% / 0.18),
-      0 10px 20px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.5);
+    /* Channel tokens only — full shadows live on .uink-solid so --solid-glow
+       resolves on the element (inherited --shadow-solid would bake :root pink). */
+    --solid-glow-alpha: 0.38;
+    --solid-glow-alpha-hover: 0.5;
+    --solid-inset-top-alpha: 0.3;
+    --solid-inset-top-alpha-hover: 0.38;
+    --solid-inset-bottom-alpha: 0.12;
+    --solid-inset-bottom-alpha-hover: 0.16;
+    --solid-drop: 0 1px 2px hsl(0 9% 13% / 0.16);
+    --solid-drop-hover: 0 2px 4px hsl(0 9% 13% / 0.18);
+    --solid-glow-offset: 0 6px 14px -4px;
+    --solid-glow-offset-hover: 0 10px 20px -4px;
   }
 
   /*
@@ -146,16 +148,16 @@
     --shadow-card:
       inset 0 1px 0 hsl(0 20% 97% / 0.08),
       0 12px 32px -12px hsl(0 0% 0% / 0.55);
-    --shadow-solid:
-      inset 0 1px 0 hsl(0 0% 100% / 0.22),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.25),
-      0 1px 2px hsl(0 0% 0% / 0.35),
-      0 8px 18px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.48);
-    --shadow-solid-hover:
-      inset 0 1px 0 hsl(0 0% 100% / 0.28),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.3),
-      0 2px 6px hsl(0 0% 0% / 0.4),
-      0 12px 24px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.62);
+    --solid-glow-alpha: 0.48;
+    --solid-glow-alpha-hover: 0.62;
+    --solid-inset-top-alpha: 0.22;
+    --solid-inset-top-alpha-hover: 0.28;
+    --solid-inset-bottom-alpha: 0.25;
+    --solid-inset-bottom-alpha-hover: 0.3;
+    --solid-drop: 0 1px 2px hsl(0 0% 0% / 0.35);
+    --solid-drop-hover: 0 2px 6px hsl(0 0% 0% / 0.4);
+    --solid-glow-offset: 0 8px 18px -4px;
+    --solid-glow-offset-hover: 0 12px 24px -4px;
     --destructive:            0 72% 51%;
     --destructive-foreground: var(--color-neutral-50);
   }
@@ -166,6 +168,22 @@
 }
 
 @layer components {
+  /* Raised solid fill. --solid-glow (HSL channels) must be set on this element. */
+  .uink-solid {
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / var(--solid-inset-top-alpha)),
+      inset 0 -1px 0 hsl(0 0% 0% / var(--solid-inset-bottom-alpha)),
+      var(--solid-drop),
+      var(--solid-glow-offset) hsl(var(--solid-glow, var(--color-primary)) / var(--solid-glow-alpha));
+  }
+  .uink-solid:hover {
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / var(--solid-inset-top-alpha-hover)),
+      inset 0 -1px 0 hsl(0 0% 0% / var(--solid-inset-bottom-alpha-hover)),
+      var(--solid-drop-hover),
+      var(--solid-glow-offset-hover) hsl(var(--solid-glow, var(--color-primary)) / var(--solid-glow-alpha-hover));
+  }
+
   /* Dark rounded panel — same edge/glow as cards, canvas fill. */
   .uink-shell {
     background-color: hsl(var(--background));

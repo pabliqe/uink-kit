@@ -26,8 +26,11 @@ module.exports = {
       },
       boxShadow: {
         card: "var(--shadow-card)",
-        solid: "var(--shadow-solid)",
-        "solid-hover": "var(--shadow-solid-hover)",
+        /* Inline --solid-glow so it resolves on the element, not baked at :root. */
+        solid:
+          "inset 0 1px 0 hsl(0 0% 100% / var(--solid-inset-top-alpha)), inset 0 -1px 0 hsl(0 0% 0% / var(--solid-inset-bottom-alpha)), var(--solid-drop), var(--solid-glow-offset) hsl(var(--solid-glow, var(--color-primary)) / var(--solid-glow-alpha))",
+        "solid-hover":
+          "inset 0 1px 0 hsl(0 0% 100% / var(--solid-inset-top-alpha-hover)), inset 0 -1px 0 hsl(0 0% 0% / var(--solid-inset-bottom-alpha-hover)), var(--solid-drop-hover), var(--solid-glow-offset-hover) hsl(var(--solid-glow, var(--color-primary)) / var(--solid-glow-alpha-hover))",
       },
       colors: {
         background: "hsl(var(--background))",

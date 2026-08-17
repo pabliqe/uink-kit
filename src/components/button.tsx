@@ -10,7 +10,7 @@ const buttonVariants = cva(
       variant: {
         // text-white (not text-background): custom fontSize tokens like text-ui
         // can be misclassified by tailwind-merge as colors and drop text-* color classes.
-        // shadow-solid: inset highlight + tinted glow so filled buttons read as raised, not flat.
+        // shadow-solid: inset highlight + tinted glow (set --solid-glow on the element).
         brand:
           "bg-primary text-white shadow-solid [--solid-glow:var(--color-primary)] hover:bg-primary-hover hover:shadow-solid-hover focus-visible:ring-primary",
         blue: "bg-secondary-blue text-white shadow-solid [--solid-glow:var(--color-secondary-blue)] hover:bg-secondary-blue-hover hover:shadow-solid-hover focus-visible:ring-secondary-blue",
