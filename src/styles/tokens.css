@@ -1,0 +1,186 @@
+:root {
+  --font-primary: 'Chivo', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-secondary: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+
+  /* Typography scale — mirrors brand.json textStyles */
+  --text-display: 2.5rem;    /* 40px h1 */
+  --text-title: 1.5rem;     /* 24px h2 */
+  --text-heading: 1rem;       /* 16px h3 / section titles */
+  --text-body: 1.125rem;      /* 18px body1 */
+  --text-body-sm: 1rem;       /* 16px body2 — default UI body */
+  --text-ui: 0.875rem;        /* 14px body3 / compact UI */
+  --text-caption: 0.75rem;    /* 12px label2 — floor for metadata */
+  --text-mono-sm: 0.8125rem;  /* 13px hex codes, paths */
+
+  /* ─────────────────────────────────────────────────────────────────
+   * Brand colors
+   * Stored as raw HSL channels — Tailwind uses hsl(var(--X)) internally.
+   * Hex shown in comment as human-readable reference. To update a color:
+   * change the hex, convert to HSL, update both the value and the comment.
+   * ───────────────────────────────────────────────────────────────── */
+  --color-primary:          332 100% 44%;  /* #E00069 */
+  --color-primary-hover:    332 100% 39%;  /* #C7005D */
+  --color-primary-light:    332 100% 84%;  /* #FFAED4 */
+  --color-primary-lighter:  332 100% 92%;  /* #FFD7F1 */
+
+  /* ─── Secondary palette ─── */
+  --color-secondary-orange:       14 100% 64%;  /* #ff7145 */
+  --color-secondary-orange-light: 19 100% 71%;  /* #ff9769 */
+  --color-secondary-yellow:       48  95% 57%;  /* #fad630 */
+  --color-secondary-blue:        238  96% 64%;  /* #4c53fb */
+  --color-secondary-blue-hover:  238  96% 56%;  /* #2f38fa */
+  --color-secondary-blue-light:  264 100% 76%;  /* #b085ff */
+  --color-secondary-teal:        169  54% 51%;  /* #40c6ae */
+
+  /* ─────────────────────────────────────────────────────────────────
+   * Neutral scale — light mode values
+   * Stored as raw HSL channels. Use hsl(var(--color-neutral-*)) in CSS,
+   * or Tailwind utilities like bg-background / text-foreground that
+   * reference these automatically via the shadcn token bridge below.
+   * ───────────────────────────────────────────────────────────────── */
+  --color-neutral-50:  0 100% 99.6%;  /* #fffdfd */
+  --color-neutral-100: 0  20% 97.1%;  /* #f9f6f6 */
+  --color-neutral-200: 0   7% 88.6%;  /* #e4e0e0 */
+  --color-neutral-300: 0   4% 81.6%;  /* #d2cece */
+  --color-neutral-400: 0   3% 74.5%;  /* #c0bcbc */
+  --color-neutral-500: 0   3% 56.1%;  /* #928c8c */
+  --color-neutral-600: 0   3% 44.1%;  /* #746d6d */
+  --color-neutral-700: 0   5% 32.7%;  /* #584f4f */
+  --color-neutral-800: 0   7% 19.4%;  /* #352e2e */
+  --color-neutral-900: 0   9% 13.3%;  /* #251f1f */
+  --color-neutral-950: 0   9%  8.6%;  /* #181414 */
+}
+
+/* ─────────────────────────────────────────────────────────────────
+ * Dark mode — neutral scale reversed for text, borders, and muted fills.
+ * Canvas/card elevation is overridden in @layer base so cards stay lighter
+ * than the page in both themes.
+ * ───────────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-neutral-50:  0   9%  8.6%;  /* #181414 */
+  --color-neutral-100: 0   9% 13.3%;  /* #251f1f */
+  --color-neutral-200: 0   7% 19.4%;  /* #352e2e */
+  --color-neutral-300: 0   5% 32.7%;  /* #584f4f */
+  --color-neutral-400: 0   3% 44.1%;  /* #746d6d */
+  --color-neutral-500: 0   3% 56.1%;  /* #928c8c */
+  --color-neutral-600: 0   3% 74.5%;  /* #c0bcbc */
+  --color-neutral-700: 0   4% 81.6%;  /* #d2cece */
+  --color-neutral-800: 0   7% 88.6%;  /* #e4e0e0 */
+  --color-neutral-900: 0  20% 97.1%;  /* #f9f6f6 */
+  --color-neutral-950: 0 100% 99.6%;  /* #fffdfd */
+}
+
+@layer base {
+  :root {
+    /* ─────────────────────────────────────────────────────────────────
+     * shadcn / Tailwind token bridge
+     * These are the variables that tailwind.config.js consumes via
+     * hsl(var(--X)). Neutrals still drive text, borders, and muted fills.
+     * Canvas/card elevation is set here so cards stay lighter than the page.
+     * ───────────────────────────────────────────────────────────────── */
+    /* Elevation: darker canvas, lighter cards in both themes. */
+    --background:           var(--color-neutral-100);
+    --foreground:           var(--color-neutral-900);
+
+    --card:                 var(--color-neutral-50);
+    --card-foreground:      var(--color-neutral-900);
+
+    --popover:              var(--color-neutral-50);
+    --popover-foreground:   var(--color-neutral-900);
+
+    --primary:              var(--color-primary);
+    --primary-foreground:   var(--color-neutral-50);
+
+    --secondary:            var(--color-neutral-200);
+    --secondary-foreground: var(--color-neutral-800);
+
+    --muted:                var(--color-neutral-300);
+    --muted-foreground:     var(--color-neutral-600);
+
+    --accent:               var(--color-primary);
+    --accent-foreground:    var(--color-neutral-50);
+
+    --destructive:          0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border:               var(--color-neutral-400);
+    --input:                var(--color-neutral-400);
+    --ring:                 var(--color-neutral-400);
+
+    --radius: 0.5rem;
+    --radius-card: 0.75rem;
+
+    /* Subtle gray edge + top-edge highlight + outer glow. */
+    --card-edge: 0 7% 19.4%; /* #352e2e */
+    --card-edge-alpha: 0.1;
+    --shadow-card:
+      inset 0 1px 0 hsl(0 0% 100% / 0.72),
+      0 8px 24px -12px hsl(0 9% 13% / 0.14);
+
+    /* Solid fills (brand / blue buttons, app-icon logo): inset highlight + tinted glow.
+       Override --solid-glow (HSL channels) on the element to tint the drop shadow. */
+    --shadow-solid:
+      inset 0 1px 0 hsl(0 0% 100% / 0.3),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.12),
+      0 1px 2px hsl(0 9% 13% / 0.16),
+      0 6px 14px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.38);
+    --shadow-solid-hover:
+      inset 0 1px 0 hsl(0 0% 100% / 0.38),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.16),
+      0 2px 4px hsl(0 9% 13% / 0.18),
+      0 10px 20px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.5);
+  }
+
+  /*
+   * Dark canvas must be darker than --card. Reversed neutrals would invert
+   * that relationship if --background/--card kept pointing at 100/50, so
+   * elevation is overridden explicitly here.
+   */
+  [data-theme="dark"],
+  .dark {
+    --background:             0 9% 5%;     /* #0e0c0c */
+    --card:                   0 9% 13.3%;  /* #251f1f */
+    --popover:                0 9% 13.3%;
+    --card-edge:              0 20% 97.1%;
+    --card-edge-alpha:        0.08;
+    --shadow-card:
+      inset 0 1px 0 hsl(0 20% 97% / 0.08),
+      0 12px 32px -12px hsl(0 0% 0% / 0.55);
+    --shadow-solid:
+      inset 0 1px 0 hsl(0 0% 100% / 0.22),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.25),
+      0 1px 2px hsl(0 0% 0% / 0.35),
+      0 8px 18px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.48);
+    --shadow-solid-hover:
+      inset 0 1px 0 hsl(0 0% 100% / 0.28),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.3),
+      0 2px 6px hsl(0 0% 0% / 0.4),
+      0 12px 24px -4px hsl(var(--solid-glow, var(--color-primary)) / 0.62);
+    --destructive:            0 72% 51%;
+    --destructive-foreground: var(--color-neutral-50);
+  }
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@layer components {
+  /* Dark rounded panel — same edge/glow as cards, canvas fill. */
+  .uink-shell {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--card-edge) / var(--card-edge-alpha));
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Lifted card on a dark canvas (page or shell). */
+  .uink-card {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border: 1px solid hsl(var(--card-edge) / var(--card-edge-alpha));
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+}
