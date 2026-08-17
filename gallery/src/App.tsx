@@ -22,7 +22,7 @@ import {
 import pkg from "../../package.json" with { type: "json" };
 import { AppTopbar } from "./AppTopbar";
 import { CopyToken } from "./CopyToken";
-import { kitComponentFiles, readLiveTokens, tokensSource, type TokenGroup } from "./kit";
+import { readLiveTokens, tokensSource, type TokenGroup } from "./kit";
 import { applyTheme, readStoredTheme, type Theme } from "./theme";
 
 function useLiveTokens(theme: Theme) {
@@ -39,17 +39,32 @@ function useLiveTokens(theme: Theme) {
   return groups;
 }
 
+function slugify(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+const kitSections = [
+  { id: "tokens", title: "Tokens" },
+  { id: "scale", title: "Scale" },
+  { id: "elevation", title: "Elevation" },
+  { id: "button-matrix", title: "Button matrix" },
+  { id: "stacked-primitives", title: "Stacked primitives" },
+] as const;
+
 function Section({
   eyebrow,
   title,
+  id,
   children,
 }: {
   eyebrow: string;
   title: string;
+  id?: string;
   children: ReactNode;
 }) {
+  const headingId = id ?? slugify(title);
   return (
-    <section className="space-y-4">
+    <section id={headingId} className="scroll-mt-28 space-y-4">
       <header className="space-y-1">
         <p className="font-display text-caption font-medium uppercase tracking-[0.14em] text-muted-foreground">
           {eyebrow}
@@ -60,6 +75,31 @@ function Section({
       </header>
       {children}
     </section>
+  );
+}
+
+function KitOutline({ className }: { className?: string }) {
+  return (
+    <nav aria-label="In this kit" className={className}>
+      <p className="font-display text-caption font-medium uppercase tracking-[0.14em] text-muted-foreground">
+        Inventory
+      </p>
+      <p className="mt-1 font-display text-heading font-semibold tracking-tight">
+        In this kit
+      </p>
+      <ul className="mt-4 flex flex-col gap-1">
+        {kitSections.map((section) => (
+          <li key={section.id}>
+            <a
+              href={`#${section.id}`}
+              className="block rounded-lg border border-transparent px-3 py-1.5 font-display text-ui text-foreground transition-colors hover:border-border hover:bg-card"
+            >
+              {section.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
@@ -99,7 +139,13 @@ export function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
       />
-      <div className="mx-auto max-w-6xl space-y-12 px-6 pb-10 pt-24">
+      <div className="mx-auto max-w-6xl px-6 pb-10 pt-24 xl:grid xl:grid-cols-[13rem_minmax(0,1fr)] xl:gap-12">
+        <aside className="hidden xl:block">
+          <div className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto pr-1">
+            <KitOutline />
+          </div>
+        </aside>
+        <div className="space-y-12">
         <header className="space-y-2">
           <p className="font-display text-caption font-medium uppercase tracking-[0.14em] text-muted-foreground">
             {pkg.name} · v{pkg.version}
@@ -113,18 +159,21 @@ export function App() {
           </p>
         </header>
 
-        <Section eyebrow="Inventory" title="In this kit">
-          <div className="flex flex-wrap gap-2">
-            {kitComponentFiles.map((name) => (
-              <span
-                key={name}
-                className="rounded-lg border border-border bg-card px-3 py-1.5 font-mono text-mono-sm"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-        </Section>
+        <div className="xl:hidden">
+          <Section eyebrow="Inventory" title="In this kit">
+            <div className="flex flex-wrap gap-2">
+              {kitSections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="rounded-lg border border-border bg-card px-3 py-1.5 font-display text-ui hover:bg-muted"
+                >
+                  {section.title}
+                </a>
+              ))}
+            </div>
+          </Section>
+        </div>
 
         <Section eyebrow="Foundations" title="Tokens">
           <div className="grid gap-6 lg:grid-cols-2">
@@ -278,6 +327,7 @@ export function App() {
             </Tabs>
           </div>
         </Section>
+        </div>
       </div>
     </TooltipProvider>
   );
