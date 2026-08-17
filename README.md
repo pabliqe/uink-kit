@@ -2,7 +2,7 @@
 
 Shared UI package for **UINK Tools** (`uink-brand-tokens`, `uink-brand-persona`, `uink-map2`, and other `uink-*` apps).
 
-This repo (`uink-kit`) is the source of truth. Apps keep a `vendor/uink-ui` snapshot for Netlify.
+This repo (`uink-kit`) is the source of truth. Apps install it from GitHub at build time.
 
 ## What’s inside
 
@@ -28,23 +28,15 @@ Both themes use a **darker canvas + lighter cards** elevation:
 
 ## Consumer setup (Vite + React + Tailwind)
 
-Local / Netlify (vendored snapshot — preferred until a private registry exists):
-
-```bash
-# From an app repo
-rsync -a --delete \
-  --exclude node_modules --exclude .git --exclude package-lock.json --exclude VENDOR.md \
-  ../uink-kit/ vendor/uink-ui/
-```
-
 ```json
-"@uink/ui": "file:./vendor/uink-ui"
+"@uink/ui": "git+https://github.com/pabliqe/uink-kit.git#main"
 ```
 
-Sibling link during local iteration:
+Netlify `npm install` clones this repo (must stay **public**).
 
 ```bash
-npm install file:../uink-kit
+npm install git+https://github.com/pabliqe/uink-kit.git#main
+# or: npm install file:../uink-kit
 ```
 
 ```js
