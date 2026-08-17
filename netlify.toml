@@ -1,0 +1,3 @@
+[build]
+  command = "npm run gallery:build"
+  publish = "gallery/dist"

@@ -1,5 +1,10 @@
 export { cn } from "./lib/utils";
-export { Button, buttonVariants, type ButtonProps } from "./components/button";
+export {
+  Button,
+  buttonVariants,
+  buttonVariantConfig,
+  type ButtonProps,
+} from "./components/button";
 export {
   Card,
   CardHeader,

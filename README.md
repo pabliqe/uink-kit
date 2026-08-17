@@ -67,6 +67,15 @@ import { Button, Card, TooltipProvider } from "@uink/ui";
 
 Ensure Vite can transpile the linked package (default for `file:` installs). Theme: set `data-theme` and `.dark` on `<html>`.
 
+## UI kit sheet
+
+A living catalog lives in `gallery/`. It imports primitives from `src/` and reads token names from `tokens.css` at runtime, so edits to styles or components update the page (Vite HMR locally; Netlify rebuild on `main`).
+
+```bash
+npm run gallery          # http://localhost:5177
+npm run gallery:build
+```
+
 ## Out of scope
 
 Product logic, Gemini, ReactFlow map chrome, Internet es Cool editorial system.

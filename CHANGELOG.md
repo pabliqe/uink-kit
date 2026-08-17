@@ -8,6 +8,8 @@
 - Add `.uink-solid` and Tailwind `shadow-solid` (tinted glow; set `--solid-glow` on the element so it is not baked at `:root`)
 - Wire brand / blue / destructive `Button` variants to solid glow via `--solid-glow`
 - Set `color-scheme: dark` under `[data-theme="dark"]`
+- Add a living `gallery/` kit sheet (tokens from CSS, primitives from `src/`)
+- Slider thumb uses the same fill as the range (`--slider-fill`)
 
 ## [0.1.0]
 - Initial tokens, Tailwind preset, and primitives (`Button`, `Tooltip`, `Separator`, `Tabs`, `Slider`, `Label`)
