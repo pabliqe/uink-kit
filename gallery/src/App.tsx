@@ -20,6 +20,8 @@ import {
   TooltipTrigger,
 } from "@uink/ui";
 import pkg from "../../package.json" with { type: "json" };
+import { AppTopbar } from "./AppTopbar";
+import { CopyToken } from "./CopyToken";
 import { kitComponentFiles, readLiveTokens, tokensSource, type TokenGroup } from "./kit";
 import { applyTheme, readStoredTheme, type Theme } from "./theme";
 
@@ -62,27 +64,7 @@ function Section({
 }
 
 function TokenSwatch({ name, raw, hex }: { name: string; raw: string; hex: string | null }) {
-  return (
-    <div className="flex min-w-0 items-center gap-3">
-      {hex ? (
-        <span
-          className="h-9 w-9 shrink-0 rounded-lg border border-border shadow-sm"
-          style={{ backgroundColor: hex }}
-          title={hex}
-        />
-      ) : (
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-dashed border-border text-caption text-muted-foreground">
-          —
-        </span>
-      )}
-      <div className="min-w-0">
-        <p className="truncate font-mono text-mono-sm text-foreground">{name}</p>
-        <p className="truncate font-mono text-caption text-muted-foreground">
-          {hex ?? raw}
-        </p>
-      </div>
-    </div>
-  );
+  return <CopyToken name={name} value={hex ?? raw} swatch={hex} />;
 }
 
 export function App() {
@@ -111,23 +93,24 @@ export function App() {
 
   return (
     <TooltipProvider>
-      <div className="mx-auto max-w-6xl space-y-12 px-6 py-10">
-        <header className="flex flex-wrap items-end justify-between gap-4">
-          <div className="space-y-2">
-            <p className="font-display text-caption font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              {pkg.name} · v{pkg.version}
-            </p>
-            <h1 className="font-display text-display font-semibold tracking-tight">
-              UI kit sheet
-            </h1>
-            <p className="max-w-xl text-body-sm text-muted-foreground">
-              Live from <code className="font-mono text-mono-sm text-foreground">src/</code>.
-              Edit tokens or primitives and this page updates — HMR in dev, rebuild on deploy.
-            </p>
-          </div>
-          <Button variant="outline" onClick={toggleTheme}>
-            {theme === "dark" ? "Light" : "Dark"} theme
-          </Button>
+      <AppTopbar
+        title="UINK Design System"
+        version={pkg.version}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
+      <div className="mx-auto max-w-6xl space-y-12 px-6 pb-10 pt-24">
+        <header className="space-y-2">
+          <p className="font-display text-caption font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            {pkg.name} · v{pkg.version}
+          </p>
+          <h1 className="font-display text-display font-semibold tracking-tight">
+            UI kit sheet
+          </h1>
+          <p className="max-w-xl text-body-sm text-muted-foreground">
+            Live from <code className="font-mono text-mono-sm text-foreground">src/</code>.
+            Click a token name or value to copy it. Edit tokens or primitives and this page updates.
+          </p>
         </header>
 
         <Section eyebrow="Inventory" title="In this kit">

@@ -12,4 +12,8 @@ export function applyTheme(theme: Theme) {
   root.dataset.theme = theme;
   root.classList.toggle("dark", theme === "dark");
   localStorage.setItem(STORAGE_KEY, theme);
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) {
+    themeColor.setAttribute("content", theme === "dark" ? "#0e0c0c" : "#fffcfc");
+  }
 }

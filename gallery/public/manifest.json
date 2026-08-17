@@ -1,0 +1,18 @@
+{
+  "name": "UINK Design System",
+  "short_name": "UINK Kit",
+  "description": "Main UI Kit library used to build quickly build robust our tools in Typescript and Javascript.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffcfc",
+  "theme_color": "#fffcfc",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "600x600",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
