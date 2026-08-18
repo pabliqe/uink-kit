@@ -8,7 +8,7 @@ This repo (`uink-kit`) is the source of truth. Apps install it from GitHub at bu
 
 - `tokens.css` — HSL brand/neutral tokens + shadcn semantic bridge + elevation
 - `tailwind-preset` — Tailwind theme extension + `tailwindcss-animate`
-- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`
+- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`, `Dialog` (+ sub-parts), `OnboardingDialog`
 - `cn()` helper
 
 ## Surfaces
@@ -75,6 +75,17 @@ A living catalog lives in `gallery/`. It imports primitives from `src/` and read
 npm run gallery          # http://localhost:5177
 npm run gallery:build
 ```
+
+## Dialog ownership
+
+`uink-kit` is the single source of truth for **dialog chrome** — overlay, surface, motion, close button. Apps are the source of truth for **dialog content** — copy, assets, analytics, and completion handlers.
+
+| Component | Use when |
+|-----------|----------|
+| `Dialog` + sub-parts | Any ad-hoc modal: confirmations, prompt viewers, info panels |
+| `OnboardingDialog` | Multi-step welcome flows with hero image, dot indicators, and skip/complete actions |
+
+See [`docs/dialog-migration.md`](docs/dialog-migration.md) for drop-in migration snippets for each app.
 
 ## Out of scope
 

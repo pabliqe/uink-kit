@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.0]
+- Add `Dialog` primitive — low-level modal shell (overlay, content, header, body, footer, title, description, close)
+- Add `OnboardingDialog` — multi-step welcome pattern (slides, hero image, dot indicators, prev/next, skip/complete callbacks)
+- Gallery specimens for both new components
+- See `docs/dialog-migration.md` for migration instructions for `uink-brand-tokens`, `uink-map2`, and `uink-brand-persona`
+
 ## [0.4.0]
 - Add `SegmentedControl` — product tabs with `pill` (in-panel) and `underline` (full-width workspace); no Radix
 
