@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.6.1]
+- Portal `LanguageSelector` menu to `document.body` (same pattern as `DropdownFilter`) so it is not clipped by app stacking contexts
+
 ## [0.6.0]
 - Add `LanguageSelector` — topbar EN/ES switcher (ENG / ESP trigger, English / Español menu) shared by `uink-map2` and `uink-brand-persona`
 - Export `UiLang`, `UI_LANGS`, `detectBrowserLang()`, and `isUiLang()` so apps share the same two-language heuristic
