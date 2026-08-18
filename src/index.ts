@@ -32,3 +32,21 @@ export {
   DropdownFilter,
   type DropdownFilterProps,
 } from "./components/dropdown-filter";
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogBody,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/dialog";
+export {
+  OnboardingDialog,
+  type OnboardingDialogProps,
+  type OnboardingSlide,
+} from "./components/onboarding-dialog";

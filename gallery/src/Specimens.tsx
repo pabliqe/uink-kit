@@ -9,8 +9,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   DropdownFilter,
   Label,
+  OnboardingDialog,
   SegmentedControl,
   Separator,
   Slider,
@@ -228,6 +238,92 @@ function SegmentedControlSpecimen() {
   );
 }
 
+function DialogSpecimen() {
+  const [open, setOpen] = useState(false);
+  return (
+    <Specimen
+      id="dialog"
+      name="Dialog"
+      description="Low-level primitive: overlay, content, header, body, footer, close"
+    >
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button variant="outline">Open dialog</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Example dialog</DialogTitle>
+            <DialogDescription>
+              Title + description in the header. Body content below.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <p className="text-body-sm text-muted-foreground">
+              App-owned content goes here. The kit owns the overlay, surface,
+              motion, and close button.
+            </p>
+          </DialogBody>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button variant="brand" onClick={() => setOpen(false)}>
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Specimen>
+  );
+}
+
+const ONBOARDING_SLIDES = [
+  {
+    title: "Welcome to the product",
+    description:
+      "This is the first slide. The kit owns the shell; the app owns the copy and assets.",
+    ctaLabel: "Next",
+  },
+  {
+    title: "What you can do",
+    description: "A second slide demonstrating multi-step navigation.",
+    bullets: ["Feature A — described concisely", "Feature B — one line each", "Feature C — no fluff"],
+    ctaLabel: "Almost there",
+  },
+  {
+    title: "You're ready",
+    description:
+      "Clicking Get started closes the dialog and calls onComplete.",
+  },
+] as const;
+
+function OnboardingDialogSpecimen() {
+  const [open, setOpen] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  return (
+    <Specimen
+      id="onboarding-dialog"
+      name="OnboardingDialog"
+      description="Multi-step welcome flow: slides, dot indicators, prev/next, hero image support"
+    >
+      <div className="flex items-center gap-3">
+        <Button variant="outline" onClick={() => { setCompleted(false); setOpen(true); }}>
+          Open onboarding
+        </Button>
+        {completed && (
+          <p className="text-caption text-muted-foreground">onComplete called ✓</p>
+        )}
+      </div>
+      <OnboardingDialog
+        open={open}
+        onOpenChange={setOpen}
+        slides={ONBOARDING_SLIDES as unknown as import("@uink/ui").OnboardingSlide[]}
+        onComplete={() => setCompleted(true)}
+      />
+    </Specimen>
+  );
+}
+
 function TooltipSpecimen() {
   return (
     <Specimen id="tooltip" name="Tooltip" description="Hover or focus the label">
@@ -244,8 +340,10 @@ function TooltipSpecimen() {
 const specimenByFile: Record<string, () => ReactNode> = {
   button: () => <ButtonSpecimen />,
   card: () => <CardSpecimen />,
+  dialog: () => <DialogSpecimen />,
   "dropdown-filter": () => <DropdownFilterSpecimen />,
   label: () => <LabelSpecimen />,
+  "onboarding-dialog": () => <OnboardingDialogSpecimen />,
   separator: () => <SeparatorSpecimen />,
   "segmented-control": () => <SegmentedControlSpecimen />,
   slider: () => <SliderSpecimen />,
