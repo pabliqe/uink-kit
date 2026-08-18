@@ -8,7 +8,7 @@ This repo (`uink-kit`) is the source of truth. Apps install it from GitHub at bu
 
 - `tokens.css` — HSL brand/neutral tokens + shadcn semantic bridge + elevation
 - `tailwind-preset` — Tailwind theme extension + `tailwindcss-animate`
-- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`, `Dialog` (+ sub-parts), `OnboardingDialog`
+- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`, `LanguageSelector`, `Dialog` (+ sub-parts), `OnboardingDialog`
 - `cn()` helper
 
 ## Surfaces
@@ -62,7 +62,7 @@ module.exports = {
 ```
 
 ```tsx
-import { Button, Card, DropdownFilter, TooltipProvider } from "@uink/ui";
+import { Button, Card, DropdownFilter, LanguageSelector, TooltipProvider } from "@uink/ui";
 ```
 
 Ensure Vite can transpile the linked package (default for `file:` installs). Theme: set `data-theme` and `.dark` on `<html>`.
@@ -86,6 +86,17 @@ npm run gallery:build
 | `OnboardingDialog` | Multi-step welcome flows with hero image, dot indicators, and skip/complete actions |
 
 See [`docs/dialog-migration.md`](docs/dialog-migration.md) for drop-in migration snippets for each app.
+
+## Language chrome
+
+`LanguageSelector` is the shared EN/ES control used in `uink-map2` and `uink-brand-persona` (same two languages for `uink-brand-tokens`). The kit owns the trigger, menu, and browser-language heuristic; the app owns dictionaries and any persistence.
+
+```tsx
+import { LanguageSelector, detectBrowserLang, type UiLang } from "@uink/ui";
+
+const [lang, setLang] = useState<UiLang>(detectBrowserLang);
+<LanguageSelector value={lang} onValueChange={setLang} />
+```
 
 ## Out of scope
 

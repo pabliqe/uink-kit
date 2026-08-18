@@ -20,7 +20,9 @@ import {
   DialogTrigger,
   DropdownFilter,
   Label,
+  LanguageSelector,
   OnboardingDialog,
+  type UiLang,
   SegmentedControl,
   Separator,
   Slider,
@@ -149,6 +151,21 @@ function DropdownFilterSpecimen() {
           options={options}
           onChange={setValue}
         />
+      </div>
+    </Specimen>
+  );
+}
+
+function LanguageSelectorSpecimen() {
+  const [lang, setLang] = useState<UiLang>("en");
+  return (
+    <Specimen
+      id="language-selector"
+      name="LanguageSelector"
+      description="Topbar EN/ES switcher: ENG / ESP trigger, English / Español menu"
+    >
+      <div className="flex items-center justify-end">
+        <LanguageSelector value={lang} onValueChange={setLang} />
       </div>
     </Specimen>
   );
@@ -343,6 +360,7 @@ const specimenByFile: Record<string, () => ReactNode> = {
   dialog: () => <DialogSpecimen />,
   "dropdown-filter": () => <DropdownFilterSpecimen />,
   label: () => <LabelSpecimen />,
+  "language-selector": () => <LanguageSelectorSpecimen />,
   "onboarding-dialog": () => <OnboardingDialogSpecimen />,
   separator: () => <SeparatorSpecimen />,
   "segmented-control": () => <SegmentedControlSpecimen />,

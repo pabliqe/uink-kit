@@ -33,6 +33,15 @@ export {
   type DropdownFilterProps,
 } from "./components/dropdown-filter";
 export {
+  LanguageSelector,
+  detectBrowserLang,
+  isUiLang,
+  UI_LANGS,
+  type LanguageSelectorLabels,
+  type LanguageSelectorProps,
+  type UiLang,
+} from "./components/language-selector";
+export {
   Dialog,
   DialogClose,
   DialogContent,

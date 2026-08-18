@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.6.0]
+- Add `LanguageSelector` — topbar EN/ES switcher (ENG / ESP trigger, English / Español menu) shared by `uink-map2` and `uink-brand-persona`
+- Export `UiLang`, `UI_LANGS`, `detectBrowserLang()`, and `isUiLang()` so apps share the same two-language heuristic
+
 ## [0.5.0]
 - Add `Dialog` primitive — low-level modal shell (overlay, content, header, body, footer, title, description, close)
 - Add `OnboardingDialog` — multi-step welcome pattern (slides, hero image, dot indicators, prev/next, skip/complete callbacks)
