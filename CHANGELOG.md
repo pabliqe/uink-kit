@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.4.0]
+- Add `SegmentedControl` — product tabs with `pill` (in-panel) and `underline` (full-width workspace); no Radix
+
 ## [0.3.0]
 - Add `DropdownFilter` — compact bold value + chevron menu (PATTTTERNS #379), not a boxed `<select>`
 

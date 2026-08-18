@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from "react";
+import { Code2, FileText, Package, ScanSearch, SlidersHorizontal } from "lucide-react";
 import {
   Button,
   buttonVariantConfig,
@@ -10,6 +11,7 @@ import {
   CardTitle,
   DropdownFilter,
   Label,
+  SegmentedControl,
   Separator,
   Slider,
   Tabs,
@@ -189,6 +191,47 @@ function SliderSpecimen() {
   );
 }
 
+function SegmentedControlSpecimen() {
+  const [pill, setPill] = useState("extract");
+  const [underline, setUnderline] = useState("editor");
+
+  return (
+    <Specimen
+      id="segmented-control"
+      name="SegmentedControl"
+      description="Product tabs: pill (in-panel) and underline (full-width workspace)"
+    >
+      <div className="space-y-5">
+        <div className="space-y-2">
+          <p className="text-caption font-medium text-muted-foreground">pill</p>
+          <SegmentedControl
+            variant="pill"
+            value={pill}
+            onValueChange={setPill}
+            options={[
+              { value: "extract", label: "Extract", icon: ScanSearch },
+              { value: "metadata", label: "Metadata", icon: FileText },
+              { value: "json", label: "Json", icon: Code2 },
+            ]}
+          />
+        </div>
+        <div className="space-y-2 border-b border-border/70">
+          <p className="text-caption font-medium text-muted-foreground">underline</p>
+          <SegmentedControl
+            variant="underline"
+            value={underline}
+            onValueChange={setUnderline}
+            options={[
+              { value: "editor", label: "Editor", icon: SlidersHorizontal },
+              { value: "output", label: "Output", icon: Package },
+            ]}
+          />
+        </div>
+      </div>
+    </Specimen>
+  );
+}
+
 function TabsSpecimen() {
   return (
     <Specimen id="tabs" name="Tabs" description="Two panels; only the active content shows">
@@ -227,6 +270,7 @@ const specimenByFile: Record<string, () => ReactNode> = {
   "dropdown-filter": () => <DropdownFilterSpecimen />,
   label: () => <LabelSpecimen />,
   separator: () => <SeparatorSpecimen />,
+  "segmented-control": () => <SegmentedControlSpecimen />,
   slider: () => <SliderSpecimen />,
   tabs: () => <TabsSpecimen />,
   tooltip: () => <TooltipSpecimen />,

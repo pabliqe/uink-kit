@@ -21,6 +21,12 @@ export {
 } from "./components/tooltip";
 export { Separator } from "./components/separator";
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/tabs";
+export {
+  SegmentedControl,
+  type SegmentedControlOption,
+  type SegmentedControlProps,
+  type SegmentedControlVariant,
+} from "./components/segmented-control";
 export { Slider } from "./components/slider";
 export { Label } from "./components/label";
 export {
