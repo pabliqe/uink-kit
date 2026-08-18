@@ -20,7 +20,6 @@ export {
   TooltipProvider,
 } from "./components/tooltip";
 export { Separator } from "./components/separator";
-export { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/tabs";
 export {
   SegmentedControl,
   type SegmentedControlOption,

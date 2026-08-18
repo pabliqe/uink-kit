@@ -8,7 +8,7 @@ This repo (`uink-kit`) is the source of truth. Apps install it from GitHub at bu
 
 - `tokens.css` — HSL brand/neutral tokens + shadcn semantic bridge + elevation
 - `tailwind-preset` — Tailwind theme extension + `tailwindcss-animate`
-- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `Tabs`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`
+- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`
 - `cn()` helper
 
 ## Surfaces

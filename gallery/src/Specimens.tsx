@@ -14,10 +14,6 @@ import {
   SegmentedControl,
   Separator,
   Slider,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -232,25 +228,6 @@ function SegmentedControlSpecimen() {
   );
 }
 
-function TabsSpecimen() {
-  return (
-    <Specimen id="tabs" name="Tabs" description="Two panels; only the active content shows">
-      <Tabs defaultValue="one">
-        <TabsList>
-          <TabsTrigger value="one">One</TabsTrigger>
-          <TabsTrigger value="two">Two</TabsTrigger>
-        </TabsList>
-        <TabsContent value="one" className="text-body-sm text-muted-foreground">
-          First panel.
-        </TabsContent>
-        <TabsContent value="two" className="text-body-sm text-muted-foreground">
-          Second panel.
-        </TabsContent>
-      </Tabs>
-    </Specimen>
-  );
-}
-
 function TooltipSpecimen() {
   return (
     <Specimen id="tooltip" name="Tooltip" description="Hover or focus the label">
@@ -272,7 +249,6 @@ const specimenByFile: Record<string, () => ReactNode> = {
   separator: () => <SeparatorSpecimen />,
   "segmented-control": () => <SegmentedControlSpecimen />,
   slider: () => <SliderSpecimen />,
-  tabs: () => <TabsSpecimen />,
   tooltip: () => <TooltipSpecimen />,
 };
 
