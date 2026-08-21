@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.2]
+- `OnboardingDialog`: overlay click always dismisses; add floating top-right close control
+- Clamp string descriptions to two lines with localized `showMoreLabel` / `showLessLabel`
+- Export `ShowMoreText` for reuse outside onboarding
+
 ## [0.6.1]
 - Portal `LanguageSelector` menu to `document.body` (same pattern as `DropdownFilter`) so it is not clipped by app stacking contexts
 

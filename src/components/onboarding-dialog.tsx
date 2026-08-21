@@ -1,4 +1,5 @@
 import * as React from "react";
+import { X } from "lucide-react";
 import { cn } from "../lib/utils";
 import { Button } from "./button";
 import {
@@ -7,6 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "./dialog";
+import { ShowMoreText } from "./show-more-text";
 
 export type OnboardingSlide = {
   /** Heading shown in the slide. */
@@ -38,6 +40,10 @@ export type OnboardingDialogProps = {
   completeCTALabel?: string;
   /** Label for the skip / close action. Pass null to hide it. */
   skipLabel?: string | null;
+  /** Label for the description expand control. Defaults to "show more…". */
+  showMoreLabel?: string;
+  /** Label for the description collapse control. Defaults to "show less". */
+  showLessLabel?: string;
   /** Extra class name on the dialog content. */
   className?: string;
 };
@@ -45,8 +51,11 @@ export type OnboardingDialogProps = {
 /**
  * Multi-step welcome/onboarding dialog.
  *
- * Kit owns: overlay, slide layout, hero area, dot indicators, prev/next controls.
+ * Kit owns: overlay, slide layout, hero area, floating close, dot indicators,
+ * prev/next controls, and two-line description clamp with show more/less.
  * App owns: slide data, copy, assets, analytics, and the onComplete handler.
+ *
+ * Overlay click and the floating close control always dismiss the dialog.
  */
 export function OnboardingDialog({
   open,
@@ -57,6 +66,8 @@ export function OnboardingDialog({
   initialSlide = 0,
   completeCTALabel = "Get started",
   skipLabel = "Skip",
+  showMoreLabel = "show more…",
+  showLessLabel = "show less",
   className,
 }: OnboardingDialogProps) {
   const [index, setIndex] = React.useState(initialSlide);
@@ -83,8 +94,9 @@ export function OnboardingDialog({
     setIndex((i) => Math.max(0, i - 1));
   }
 
-  function handleSkip() {
-    onSkip ? onSkip() : onOpenChange(false);
+  function handleDismiss() {
+    if (onSkip) onSkip();
+    else onOpenChange(false);
   }
 
   if (!slide) return null;
@@ -94,10 +106,16 @@ export function OnboardingDialog({
       <DialogContent
         hideClose
         className={cn("overflow-hidden p-0 max-w-lg", className)}
-        // Prevent close-on-overlay-click for multi-step flows so users don't
-        // lose their progress by accident. They can still skip via the button.
-        onInteractOutside={(e) => e.preventDefault()}
       >
+        <button
+          type="button"
+          onClick={handleDismiss}
+          className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition-opacity hover:bg-background hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring"
+          aria-label={skipLabel || "Close"}
+        >
+          <X className="h-4 w-4" />
+        </button>
+
         {/* Hero image — bleeds to all edges */}
         {slide.imageSrc && (
           <div className="relative aspect-video w-full overflow-hidden bg-muted">
@@ -118,7 +136,12 @@ export function OnboardingDialog({
           <DialogDescription asChild>
             <div className="text-body-sm text-muted-foreground">
               {typeof slide.description === "string" ? (
-                <p>{slide.description}</p>
+                <ShowMoreText
+                  moreLabel={showMoreLabel}
+                  lessLabel={showLessLabel}
+                >
+                  {slide.description}
+                </ShowMoreText>
               ) : (
                 slide.description
               )}
@@ -153,7 +176,7 @@ export function OnboardingDialog({
           <div className="flex items-center justify-between gap-3 pt-1">
             <div className="flex gap-2">
               {skipLabel !== null && (
-                <Button variant="ghost" size="sm" onClick={handleSkip}>
+                <Button variant="ghost" size="sm" onClick={handleDismiss}>
                   {skipLabel}
                 </Button>
               )}

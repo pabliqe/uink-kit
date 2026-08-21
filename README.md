@@ -8,7 +8,7 @@ This repo (`uink-kit`) is the source of truth. Apps install it from GitHub at bu
 
 - `tokens.css` — HSL brand/neutral tokens + shadcn semantic bridge + elevation
 - `tailwind-preset` — Tailwind theme extension + `tailwindcss-animate`
-- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`, `LanguageSelector`, `Dialog` (+ sub-parts), `OnboardingDialog`
+- Primitives: `Button`, `Card`, `Tooltip`, `Separator`, `SegmentedControl`, `Slider`, `Label`, `DropdownFilter`, `LanguageSelector`, `Dialog` (+ sub-parts), `OnboardingDialog`, `ShowMoreText`
 - `cn()` helper
 
 ## Surfaces
@@ -83,7 +83,8 @@ npm run gallery:build
 | Component | Use when |
 |-----------|----------|
 | `Dialog` + sub-parts | Any ad-hoc modal: confirmations, prompt viewers, info panels |
-| `OnboardingDialog` | Multi-step welcome flows with hero image, dot indicators, and skip/complete actions |
+| `OnboardingDialog` | Multi-step welcome flows with hero image, floating close, overlay dismiss, two-line description clamp, and skip/complete actions |
+| `ShowMoreText` | Two-line clamp with show more / show less for long string copy |
 
 See [`docs/dialog-migration.md`](docs/dialog-migration.md) for drop-in migration snippets for each app.
 

@@ -59,3 +59,7 @@ export {
   type OnboardingDialogProps,
   type OnboardingSlide,
 } from "./components/onboarding-dialog";
+export {
+  ShowMoreText,
+  type ShowMoreTextProps,
+} from "./components/show-more-text";

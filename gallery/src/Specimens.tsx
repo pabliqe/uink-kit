@@ -321,7 +321,7 @@ function OnboardingDialogSpecimen() {
     <Specimen
       id="onboarding-dialog"
       name="OnboardingDialog"
-      description="Multi-step welcome flow: slides, dot indicators, prev/next, hero image support"
+      description="Multi-step welcome flow: slides, overlay dismiss, floating close, show more, prev/next, hero image"
     >
       <div className="flex items-center gap-3">
         <Button variant="outline" onClick={() => { setCompleted(false); setOpen(true); }}>
