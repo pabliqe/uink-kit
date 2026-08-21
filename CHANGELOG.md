@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.6.3]
+- `OnboardingDialog`: clamp description **and** bullets together behind “show more…”
+- `ShowMoreText`: clamp any block content (not only strings); add `resetKey`
+
 ## [0.6.2]
 - `OnboardingDialog`: overlay click always dismisses; add floating top-right close control
 - Clamp string descriptions to two lines with localized `showMoreLabel` / `showLessLabel`

@@ -7,43 +7,42 @@ export type ShowMoreTextProps = {
   moreLabel?: string;
   /** Label for the collapse control. Defaults to "show less". */
   lessLabel?: string;
+  /** When this value changes, collapse back to the clamped state. */
+  resetKey?: React.Key;
   className?: string;
 };
 
 /**
- * Clamps string copy to two lines with an inline “show more…” control when overflowed.
- * Non-string children are rendered as-is (no clamp).
+ * Clamps block copy (paragraph, bullets, etc.) to two lines with an inline
+ * “show more…” control when the content overflows.
  */
 export function ShowMoreText({
   children,
   moreLabel = "show more…",
   lessLabel = "show less",
+  resetKey,
   className,
 }: ShowMoreTextProps) {
-  const textRef = React.useRef<HTMLParagraphElement>(null);
+  const contentRef = React.useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = React.useState(false);
   const [needsClamp, setNeedsClamp] = React.useState(false);
 
   React.useLayoutEffect(() => {
     setExpanded(false);
-  }, [children]);
+  }, [resetKey, children]);
 
   React.useLayoutEffect(() => {
     if (expanded) return;
-    const el = textRef.current;
+    const el = contentRef.current;
     if (!el) return;
     setNeedsClamp(el.scrollHeight > el.clientHeight + 1);
-  }, [children, expanded]);
-
-  if (typeof children !== "string") {
-    return <div className={className}>{children}</div>;
-  }
+  }, [resetKey, children, expanded]);
 
   return (
     <div className={className}>
-      <p ref={textRef} className={cn(!expanded && "line-clamp-2")}>
+      <div ref={contentRef} className={cn(!expanded && "line-clamp-2")}>
         {children}
-      </p>
+      </div>
       {needsClamp && (
         <button
           type="button"

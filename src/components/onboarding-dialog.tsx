@@ -40,9 +40,9 @@ export type OnboardingDialogProps = {
   completeCTALabel?: string;
   /** Label for the skip / close action. Pass null to hide it. */
   skipLabel?: string | null;
-  /** Label for the description expand control. Defaults to "show more…". */
+  /** Label for the body expand control. Defaults to "show more…". */
   showMoreLabel?: string;
-  /** Label for the description collapse control. Defaults to "show less". */
+  /** Label for the body collapse control. Defaults to "show less". */
   showLessLabel?: string;
   /** Extra class name on the dialog content. */
   className?: string;
@@ -52,7 +52,8 @@ export type OnboardingDialogProps = {
  * Multi-step welcome/onboarding dialog.
  *
  * Kit owns: overlay, slide layout, hero area, floating close, dot indicators,
- * prev/next controls, and two-line description clamp with show more/less.
+ * prev/next controls, and two-line body clamp (description + bullets) with
+ * show more/less.
  * App owns: slide data, copy, assets, analytics, and the onComplete handler.
  *
  * Overlay click and the floating close control always dismiss the dialog.
@@ -135,23 +136,24 @@ export function OnboardingDialog({
 
           <DialogDescription asChild>
             <div className="text-body-sm text-muted-foreground">
-              {typeof slide.description === "string" ? (
-                <ShowMoreText
-                  moreLabel={showMoreLabel}
-                  lessLabel={showLessLabel}
-                >
-                  {slide.description}
-                </ShowMoreText>
-              ) : (
-                slide.description
-              )}
-              {slide.bullets && slide.bullets.length > 0 && (
-                <ul className="mt-3 space-y-1.5 list-disc pl-4">
-                  {slide.bullets.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-              )}
+              <ShowMoreText
+                resetKey={index}
+                moreLabel={showMoreLabel}
+                lessLabel={showLessLabel}
+              >
+                {typeof slide.description === "string" ? (
+                  <p>{slide.description}</p>
+                ) : (
+                  slide.description
+                )}
+                {slide.bullets && slide.bullets.length > 0 && (
+                  <ul className="mt-3 space-y-1.5 list-disc pl-4">
+                    {slide.bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                )}
+              </ShowMoreText>
             </div>
           </DialogDescription>
 
